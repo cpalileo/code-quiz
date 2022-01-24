@@ -79,9 +79,10 @@ var welcome = document.querySelector(".welcome");
 var questionDisplay = document.querySelector(".textQuestion");
 var textAnswer = document.querySelector(".textAnswer");
 var displayScore = document.querySelector(".currentScore");
-var questionCount = quizQuestions[length];
+// var questionCount = quizQuestions.length - 1; // was receiving an error because quizQuestions.length was past the end of the array.  So needed to subtract 1 form the array length.
+var questionCount = 0;
 var questionStaged = quizQuestions[questionCount];
-var timer = 30;
+var timer = 60;
 
 // display high score at upper left screen
 
@@ -97,10 +98,12 @@ function gameStart() {
 // create a timer (Get the questions before working on timer)
 function countDown() {
   var timerRules = setInterval(function () {
-    document.getElementById("progBar").value = 30 - --timer; // subtracts 1 second from 30
-    if (timer <= 0) clearInterval(timerRules); // prevents a negative count down
+    document.getElementById("progBar").value = 60 - --timer; // subtracts 1 second from 30
     document.getElementById("counting").innerHTML = timer; // prints the seconds remaining
-    gameOver();
+    if (timer <= 0) {
+      clearInterval(timerRules); // prevents a negative count down
+      gameOver(timerRules);
+    }
   }, 1000); // set to 1 second
 }
 
@@ -123,34 +126,35 @@ function quiz() {
 //pulls next question
 
 function questionRules(button) {
-  if (this.value === questionStaged.answer) {
+  console.log(button.srcElement.innerText);
+  if (button.srcElement.innerText === questionStaged.answer) {
+    console.log("correct answer");
     // if a correct answer is given
     trackPoints++; //score will increase the points based on the value above
     displayScore.textContent = "Points: " + trackPoints; // displays the updated points in the element
     localStorage.setItem("pointTally", trackPoints); // stores points in local storage
   } else {
+    console.log("incorrect answer");
     // if wrong answer is selected
     timer -= 2; // penalize 2 seconds
-    trackPoints--; // subtract a point for the wrong answer
-    if (trackPoints < 0) {
-      //  track points will be given a value of 0 if points fall below 0
-      trackPoints = 0;
-    }
     displayScore.textContent = "Points: " + trackPoints; // displays updated points in element
     localStorage.setItem("pointTally", trackPoints); // stores points in local storage
   }
   questionCount++; // moves to the next question
-  questionStaged = quizQuestions[questionCount]; // pulls the questions from the pool
-  if (questionCount === quizQuestions.length) {
+  if (questionCount >= quizQuestions.length) {
+    // personal note: questionCount is past the last question because length of array is one greater than the final item's index
     // if all the questions are answered  move to game over
     gameOver();
   } else {
-    new quiz(questionStaged); // if more questions remain the loop will continue
+    console.log(questionCount);
+    questionStaged = quizQuestions[questionCount]; // pulls the questions from the pool
+    quiz(questionStaged); // if more questions remain the loop will continue
   }
 }
 
 // if all questions correct then win, if timer runs out then game over
-function gameOver() {
+function gameOver(timerRules) {
+  clearInterval(timerRules);
   console.log("YOU MADE IT TO THE GAME OVER SECTION");
 }
 // current score is compared to high score.  if current score is > than high score then
