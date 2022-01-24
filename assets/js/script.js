@@ -80,8 +80,6 @@ var welcome = document.querySelector(".welcome");
 var questionDisplay = document.querySelector(".textQuestion");
 var textAnswer = document.querySelector(".textAnswer");
 
-// create a timer (Get the questions before working on timer)
-
 // display high score at upper left screen
 
 buttonStart.addEventListener("click", gameStart); //event listener, button reacts to mouse click
@@ -89,8 +87,19 @@ buttonStart.addEventListener("click", gameStart); //event listener, button react
 function gameStart() {
   // function activated from button click
   welcome.textContent = ""; // clears the welcome screen
+  countDown(); // starts the timer
   quiz(); // starts the quiz function
-  //timer();  // starts the timer
+}
+
+// create a timer (Get the questions before working on timer)
+function countDown() {
+  var reverse_counter = 30; //set the counter to 30
+  var timerRules = setInterval(function () {
+    document.getElementById("progBar").value = 30 - --reverse_counter; // subtracts 1 second from 30
+    if (reverse_counter <= 0) clearInterval(timerRules); // prevents a negative count down
+
+    document.getElementById("counting").innerHTML = reverse_counter; // prints the seconds remaining
+  }, 1000); // set to 1 second
 }
 
 function quiz() {
