@@ -74,11 +74,14 @@ var quizQuestions = [
 ];
 
 // define variables for classes in html file.  create variable for questions list
-var questionStaged = quizQuestions[1];
 var buttonStart = document.querySelector(".buttonStart");
 var welcome = document.querySelector(".welcome");
 var questionDisplay = document.querySelector(".textQuestion");
 var textAnswer = document.querySelector(".textAnswer");
+var displayScore = document.querySelector(".currentScore");
+var questionCount = quizQuestions[length];
+var questionStaged = quizQuestions[questionCount];
+var timer = 30;
 
 // display high score at upper left screen
 
@@ -93,12 +96,11 @@ function gameStart() {
 
 // create a timer (Get the questions before working on timer)
 function countDown() {
-  var reverse_counter = 30; //set the counter to 30
   var timerRules = setInterval(function () {
-    document.getElementById("progBar").value = 30 - --reverse_counter; // subtracts 1 second from 30
-    if (reverse_counter <= 0) clearInterval(timerRules); // prevents a negative count down
-
-    document.getElementById("counting").innerHTML = reverse_counter; // prints the seconds remaining
+    document.getElementById("progBar").value = 30 - --timer; // subtracts 1 second from 30
+    if (timer <= 0) clearInterval(timerRules); // prevents a negative count down
+    document.getElementById("counting").innerHTML = timer; // prints the seconds remaining
+    gameOver();
   }, 1000); // set to 1 second
 }
 
@@ -120,12 +122,33 @@ function quiz() {
 // if then loops.  correct adds to score and pulls next question.  incorrect deducts from time and
 //pulls next question
 
-function questionRules() {
-  console.log("YOU MADE IT TO THE QUESTION RULES SECTION");
+function questionRules(button) {
+  if (this.value === questionStaged.answer) {
+    trackPoints++;
+    displayScore.textContent = "Points: " + trackPoints;
+    localStorage.setItem("pointTally", trackPoints);
+  } else {
+    timer -= 5;
+    trackPoints--;
+    if (trackPoints < 0) {
+      trackPoints = 0;
+    }
+    displayScore.textContent = "Points: " + trackPoints;
+    localStorage.setItem("pointTally", trackPoints);
+  }
+  questionCount++;
+  questionStaged = quizQuestions[questionCount];
+  if (questionCount === quizQuestions.length) {
+    gameOver();
+  } else {
+    new quiz(questionStaged);
+  }
 }
 
 // if all questions correct then win, if timer runs out then game over
-
+function gameOver() {
+  console.log("YOU MADE IT TO THE GAME OVER SECTION");
+}
 // current score is compared to high score.  if current score is > than high score then
 //congratulate & announce high score, input initials, store score in local storage
 // if current score is < high score, report score and ask if want to play again or quit
