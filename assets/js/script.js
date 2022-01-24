@@ -124,24 +124,28 @@ function quiz() {
 
 function questionRules(button) {
   if (this.value === questionStaged.answer) {
-    trackPoints++;
-    displayScore.textContent = "Points: " + trackPoints;
-    localStorage.setItem("pointTally", trackPoints);
+    // if a correct answer is given
+    trackPoints++; //score will increase the points based on the value above
+    displayScore.textContent = "Points: " + trackPoints; // displays the updated points in the element
+    localStorage.setItem("pointTally", trackPoints); // stores points in local storage
   } else {
-    timer -= 5;
-    trackPoints--;
+    // if wrong answer is selected
+    timer -= 2; // penalize 2 seconds
+    trackPoints--; // subtract a point for the wrong answer
     if (trackPoints < 0) {
+      //  track points will be given a value of 0 if points fall below 0
       trackPoints = 0;
     }
-    displayScore.textContent = "Points: " + trackPoints;
-    localStorage.setItem("pointTally", trackPoints);
+    displayScore.textContent = "Points: " + trackPoints; // displays updated points in element
+    localStorage.setItem("pointTally", trackPoints); // stores points in local storage
   }
-  questionCount++;
-  questionStaged = quizQuestions[questionCount];
+  questionCount++; // moves to the next question
+  questionStaged = quizQuestions[questionCount]; // pulls the questions from the pool
   if (questionCount === quizQuestions.length) {
+    // if all the questions are answered  move to game over
     gameOver();
   } else {
-    new quiz(questionStaged);
+    new quiz(questionStaged); // if more questions remain the loop will continue
   }
 }
 
