@@ -35,7 +35,7 @@ h1 {
       <progress class="progress-bar bg-danger" role="progressbar" style="width: 100%" value="0" max="30" id="progBar" ></progress>
       <p id="counting">60</p>
       </div>
-      <div class="col-3 text-center currentScore"></div>
+      <div class="col-3 text-center currentScore">0</div>
     </header>
   </div>
 
@@ -56,14 +56,15 @@ h1 {
     <section>
       <div class="textAnswer"></div>
     </section>
+  </div>
 
-    <section>
-      <div class="gameover" style="visibility: hidden;">
-        <h2>Game Over!</h2>
-        <h3 id="final-score"></h3>
-        <button class="buttonColors reset-game">Play again?</button>
-      </div>
-    </section>
+  <div class="endGame" style="visibility: hidden;">
+    <div class="endGame">Game Over!</div>
+    <div class="endGame">You scored</div>
+    <div id="currentScore" class="endGame"></div>
+    <div class="endGame">
+    <button class="buttonColors reset-game">Play again?</button>
+    </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js">

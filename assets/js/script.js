@@ -79,8 +79,10 @@ var welcome = document.querySelector(".welcome");
 var questionDisplay = document.querySelector(".textQuestion");
 var textAnswer = document.querySelector(".textAnswer");
 var displayScore = document.querySelector(".currentScore");
+var endGameScreen = document.querySelector(".endGame");
 // var questionCount = quizQuestions.length - 1; // was receiving an error because quizQuestions.length was past the end of the array.  So needed to subtract 1 form the array length.
 var questionCount = 0;
+var trackPoints = 0;
 var questionStaged = quizQuestions[questionCount];
 var timer = 60;
 
@@ -131,14 +133,12 @@ function questionRules(button) {
     console.log("correct answer");
     // if a correct answer is given
     trackPoints++; //score will increase the points based on the value above
-    displayScore.textContent = "Points: " + trackPoints; // displays the updated points in the element
+    displayScore.textContent = trackPoints + " Points"; // displays the updated points in the element
     localStorage.setItem("pointTally", trackPoints); // stores points in local storage
   } else {
     console.log("incorrect answer");
     // if wrong answer is selected
-    timer -= 2; // penalize 2 seconds
-    displayScore.textContent = "Points: " + trackPoints; // displays updated points in element
-    localStorage.setItem("pointTally", trackPoints); // stores points in local storage
+    timer -= 5; // penalize 5 seconds
   }
   questionCount++; // moves to the next question
   if (questionCount >= quizQuestions.length) {
@@ -154,8 +154,14 @@ function questionRules(button) {
 
 // if all questions correct then win, if timer runs out then game over
 function gameOver(timerRules) {
-  clearInterval(timerRules);
   console.log("YOU MADE IT TO THE GAME OVER SECTION");
+
+  questionDisplay.style.visibility = "hidden";
+  textAnswer.style.visibility = "hidden";
+
+  endGameScreen.style.visibility = "visible";
+  endGameScreen.textContent = displayScore + " points";
+  clearInterval(timerRules);
 }
 // current score is compared to high score.  if current score is > than high score then
 //congratulate & announce high score, input initials, store score in local storage
