@@ -35,35 +35,37 @@ h1 {
       <progress class="progress-bar bg-danger" role="progressbar" style="width: 100%" value="0" max="30" id="progBar" ></progress>
       <p id="counting">60</p>
       </div>
-      <div class="col-3 text-center currentScore">0</div>
+      <div class="col-3 text-center displayScore">0</div>
     </header>
   </div>
 
 <!-- Title Font Needs to be changed to something stylized-->
-  <div class="container m-5">
-    <h1 class="display-1 row w-100 justify-content-center">The Marvel Comics Quiz Challenge</h1>
-  </div>
-
-  <div class="welcome row w-65 justify-content-center">
-    <h2 class="row text-center">Welcome to the Marvel Comics quiz challenge!  Are you ready to test your knowledge of Marvel Comics?  Take this short quiz that separates mainstream fans from the Marvel experts.</h2>
-    <button type="button" class="buttonColors buttonStart btn btn-dark active" aria-pressed="true">Click to Begin</button>  
-  </div>
-  
-  <div>
-    <section>
-      <div class="textQuestion"></div>
-    </section>
-    <section>
-      <div class="textAnswer"></div>
+  <div>  
+    <section class="container m-5">
+      <h1 class="display-1 row w-100 justify-content-center">The Marvel Comics Quiz Challenge</h1>
     </section>
   </div>
 
-  <div class="endGame" style="visibility: hidden;">
-    <div class="endGame">Game Over!</div>
-    <div class="endGame">You scored</div>
-    <div id="currentScore" class="endGame"></div>
-    <div class="endGame">
-    <button class="buttonColors reset-game">Play again?</button>
+
+  <div id="welcomeScreen">
+    <section class="row w-65 justify-content-center">
+      <h2 class="row text-center challenge"></h2>
+      <div class="startButton"></div>
+    </section>
+  </div>
+
+  <div id="quizBlock">
+    <section class="row w-65 justify-content-center">
+      <div class="questionDisplay row text-center"></div>
+      <div class="textAnswer row text-center"></div>
+    </section>
+  </div>
+
+  <div id="endGameScreen">
+    <div class="gameOverText"></div>
+    <div id="finalScore"></div>
+    <div>
+    <div class="resetButton"></div>
     </div>
   </div>
 
